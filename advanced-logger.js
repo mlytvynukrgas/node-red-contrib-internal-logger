@@ -184,5 +184,5 @@ module.exports = function (RED) {
         RED.comms.publish("debug", msg);
     }
 
-    RED.nodes.registerType("logger", AdvanceLoggerNode);
+    RED.nodes.registerType("advancedlogger", AdvanceLoggerNode);
 };
