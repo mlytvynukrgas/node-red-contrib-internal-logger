@@ -1,26 +1,23 @@
-# node-red-contrib-advance-logger
+# node-red-contrib-advanced-logger
 
-[![Build status][travis-image]][travis-url] [![NPM version][npm-image]][npm-url] [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> A Node-RED Logging node.
+> A Node-RED Logging module.
 
-[`Advance Logger`](https://www.npmjs.com/package/node-red-contrib-advance-logger) is providing multi transport logging capability (file, console and debug) for Node-Red. 
-
-Advance Logger depend on the file logging library called [`Winston`](https://www.npmjs.com/package/winston). 
-
-Goal of Advance Logger is to be a simple logger for Node-Red.
+[`Advanced Logger`](https://www.npmjs.com/package/node-red-contrib-advanced-logger) provides logging controls for Node-Red logging. 
+It was originlly forked from [`Advance Logger`](https://www.npmjs.com/package/node-red-contrib-advance-logger)
 
 ## Installation
 
-Install `node-red-contrib-advance-logger` using [npm](https://www.npmjs.com/)
+Install `node-red-contrib-advanced-logger` using [npm](https://www.npmjs.com/)
 
 ```bash
-npm install --save node-red-contrib-advance-logger
+npm install --save node-red-contrib-advanced-logger
 ```
 
 ## Features
 
-* Multiple transports (File, Console and Debug)
+* Log to File, Console and Node-Red Debug window
 * Log archiving.
 * Log rotating.
 * Logging levels.
@@ -38,15 +35,8 @@ The input payload JSON should have following properties for warning and error lo
 * `warn` – warning logging
 * `error` – error logging
 
-## Icon credit
-
-The node icon is the [readability](https://materialdesignicons.com/icon/readability) icon from [Material Design Icons](https://materialdesignicons.com) by Austin Andrews [@Templarian](http://twitter.com/Templarian).
-
 ## License
 
-MIT © `Jayathu Amarasinghe`
+MIT © `Marc Neubauer`
 
-[npm-url]: https://www.npmjs.com/package/node-red-contrib-advance-logger
-[npm-image]: https://badge.fury.io/js/node-red-contrib-advance-logger.svg
-[travis-url]: https://travis-ci.org/jayathuam/node-red-contrib-advance-logger
-[travis-image]: https://travis-ci.org/jayathuam/node-red-contrib-advance-logger.svg?branch=master
+[npm-url]: https://www.npmjs.com/package/node-red-contrib-advanced-logger
