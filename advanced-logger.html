@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('advancedlogger', {
+    RED.nodes.registerType('advanced logger', {
         category: 'output',
         color: '#B2EBF2',
         defaults: {
@@ -59,7 +59,7 @@
         icon: "log.png",
         align: "right",
         label: function() {
-            return this.name || "advancedlogger";
+            return this.name || "advanced logger";
         },
         oneditprepare: function() {
             $("#node-input-typed-complete").typedInput({
@@ -115,7 +115,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="advancedlogger">
+<script type="text/x-red" data-template-name="advanced logger">
     <div class="form-row">
         <label for="node-input-name" style="width: 28%;"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -168,6 +168,6 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="advancedlogger">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+<script type="text/x-red" data-help-name="advanced logger">
+    <p> A node to facilitate sending log data where you want it.</p>
 </script>
