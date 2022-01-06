@@ -1,14 +1,10 @@
 {
   "name": "node-red-contrib-advance-logger",
-  "version": "1.0.2",
-  "description": "Advance logger for Node-Red",
+  "version": "1.0.3",
+  "description": "Advance logger for Node-Red, forked from jayathuam/node-red-contrib-advance-logger",
   "main": "advance-logger.js",
   "scripts": {    
     "release": "standard-version"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jayathuam/node-red-contrib-advance-logger"
   },  
   "keywords": [
     "file logger",
@@ -20,7 +16,17 @@
       "node-red-contrib-logger": "advance-logger.js"
     }
   },
-  "author": "Jayathu Amarasinghe",
+  "author": {
+    "name": "Marc Neubauer",
+    "email": "marc.neubauer@gmail.com"
+  },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/marcneubauer/node-red-contrib-advance-logger.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/marcneubauer"
+  },
   "license": "MIT",
   "dependencies": {
     "winston": "2.2.0"
