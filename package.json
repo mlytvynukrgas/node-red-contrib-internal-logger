@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/marcneubauer/node-red-contrib-advance-logger.git"
+    "url": "https://github.com/marcneubauer/node-red-contrib-advanced-logger.git"
   },
   "license": "MIT",
   "dependencies": {
