@@ -10,20 +10,6 @@
                 value: "node-red.log",
                 required: true
             },
-            maxsize: {
-                value: 1,
-                required: true,
-                validate: function(v) {
-                    return v >= 1
-                }
-            },
-            maxfiles: {
-                value: 10,
-                required: true,
-                validate: function(v) {
-                    return v >= 1
-                }
-            },
             complete: {
                 value: "false",
                 required: true
@@ -43,25 +29,24 @@
             logtype: {
                 value: "info",
                 required: true
+            },
+            prefix: {
+                value: "./AdvancedLogger/%DATE%.log",
+                required: true
+            },
+            datePattern: {
+                value: "YYYY-MM-DD.",
+                required: true
             }
-            // info: {
-            //     type: "info"
-            // },
-            // warn: {
-            //     type: "warn"
-            // },
-            // error: {
-            //     type: "error"
-            // }
         },
         inputs: 1,
         outputs: 0,
         icon: "log.png",
         align: "right",
-        label: function() {
+        label: function(){
             return this.name || "advanced logger";
         },
-        oneditprepare: function() {
+        oneditprepare: function(){
             $("#node-input-typed-complete").typedInput({
                 types: ['msg', {
                     value: "full",
@@ -77,7 +62,7 @@
                 $("#node-input-typed-complete").typedInput('type', 'msg');
                 $("#node-input-typed-complete").typedInput('value', property);
             }
-            $("#node-input-typed-complete").on('change', function() {
+            $("#node-input-typed-complete").on('change', function(){
                 if ($("#node-input-typed-complete").typedInput('type') === 'msg' &&
                     $("#node-input-typed-complete").typedInput('value') === ''
                 ) {
@@ -85,17 +70,7 @@
                 }
             });
 
-            $("#node-input-file").on("change", function() {
-                if ($("#node-input-file").is(':checked')) {
-                    $("#node-input-file").attr("file", "file");
-                    $("#filefields").show();
-                } else {
-                    $("#node-input-file").removeAttr("file");
-                    $("#filefields").hide();
-                }
-            });
-
-            $("#node-input-logtype").on("change", function() {               
+            $("#node-input-logtype").on("change", function(){
                 if ($("#node-input-logtype").val() === 'info') {
                     $("#completerow").show();
                 } else {
@@ -104,7 +79,7 @@
             });
 
         },
-        oneditsave: function() {
+        oneditsave: function(){
             var type = $("#node-input-typed-complete").typedInput('type');
             if (type === 'full') {
                 $("#node-input-complete").val("true");
@@ -117,54 +92,38 @@
 
 <script type="text/x-red" data-template-name="advanced logger">
     <div class="form-row">
-        <label for="node-input-name" style="width: 28%;"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-row" style="border: 1px solid black; padding: 5px;">
-        <label style="width: 28%;"><i class="fa fa-rocket"></i> Log transports</label>
-
-        <input type="checkbox" id="node-input-console" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
-        <label for="node-input-console" style="width: 18%;"> Console</label>
-
-        <input type="checkbox" id="node-input-debug" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
-        <label for="node-input-debug" style="width: 18%;"> Debug</label>
-
-        <input type="checkbox" id="node-input-file" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
-        <label for="node-input-file" style="width: 18%;"> File</label>
+    <label for="node-input-name" style="width: 28%;"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-logtype" style="width: 28%;"><i class="fa fa-tasks"></i> Log type</label>
-        <select id="node-input-logtype">
-			<option value="info">Info logs</option>
-			<option value="warn">Warn logs</option>
-            <option value="error">Error logs</option>
-		</select>
+    <label for="node-input-prefix" style="width:28%;">Prefix</label>
+    <input type="text" id="node-input-prefix" placeholder="Log-">
     </div>
+    <div class="form-row">
+    <label for="node-input-datePattern" style="width: 28%;">Date Pattern</label>
+    <input type="text" id="node-input-datePattern" placeholder="YYYY-MM-DD">
+    </div>
+    <div class="form-row" style="border: 1px solid black; padding: 5px;">
+    <label style="width: 28%;"><i class="fa fa-rocket"></i> Log transports</label>
 
+    <input type="checkbox" id="node-input-console" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
+    <label for="node-input-console" style="width: 18%;"> Console</label>
+
+    <input type="checkbox" id="node-input-debug" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
+    <label for="node-input-debug" style="width: 18%;"> Debug</label>
+    </div>
+    <div class="form-row">
+    <label for="node-input-logtype" style="width: 28%;"><i class="fa fa-tasks"></i> Log type</label>
+    <select id="node-input-logtype">
+    <option value="info">Info logs</option>
+    <option value="warn">Warn logs</option>
+    <option value="error">Error logs</option>
+    </select>
+    </div>
     <div class="form-row" id="completerow">
-        <label for="node-input-typed-complete" style="width: 28%;"><i class="fa fa-clone"></i> Info log output</label>
-        <input id="node-input-typed-complete" type="text">
-        <input id="node-input-complete" type="hidden">
-    </div>
-
-    <div id="filefields" style="border: 1px solid black; padding: 5px;">
-        <div class="form-row">
-            <label for="node-input-filename" style="width: 28%;"><i class="fa fa-camera-retro"></i> File name</label>
-            <input type="text" id="node-input-filename" placeholder="File Name">
-        </div>
-        <div class="form-row">
-            <label for="node-input-maxsize" style="width: 28%;"><i class="fa fa-file"></i> File size(mb)</label>
-            <input type="number" id="node-input-maxsize" min="1">
-        </div>
-        <div class="form-row">
-            <label for="node-input-maxfiles"style="width: 28%;"><i class="fa fa-files-o"></i> Num of files</label>
-            <input type="number" id="node-input-maxfiles" min="1">
-        </div>
-        <div class="form-row">
-            <label for="node-input-zip" style="width: 28%;"> </label>
-            <input type="checkbox" id="node-input-zip" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
-            <label for="node-input-zip" style="width: 25%;"> Archive</label>
-        </div>
+    <label for="node-input-typed-complete" style="width: 28%;"><i class="fa fa-clone"></i> Info log output</label>
+    <input id="node-input-typed-complete" type="text">
+    <input id="node-input-complete" type="hidden">
     </div>
 </script>
 

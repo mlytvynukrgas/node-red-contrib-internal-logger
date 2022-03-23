@@ -8,7 +8,6 @@
   },
   "keywords": [
     "file logger",
-    "winston",
     "node-red"
   ],
   "node-red": {
@@ -26,11 +25,10 @@
     "url": "https://github.com/marcneubauer/node-red-contrib-advanced-logger.git"
   },
   "license": "MIT",
-  "dependencies": {
-    "winston": "2.2.0"
-  },
   "devDependencies": {
     "jshint": "^2.9.4",
     "standard-version": "^4.0.0"
+  },
+  "dependencies": {
+    "winston-daily-rotate-file": "^4.6.1"
   }
-}

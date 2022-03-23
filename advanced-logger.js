@@ -1,94 +1,45 @@
-module.exports = function (RED) {  
-    "use strict";  
+// const winston = require("winston");
+module.exports = function (RED) {
+    "use strict";
     var debuglength = RED.settings.debugMaxLength || 1000;
     var util = require("util");
-    var events = require("events");
+    require('winston-daily-rotate-file');
+
     function AdvanceLoggerNode(config) {
         var winston = require('winston');
-        winston.handleExceptions(new winston.transports.File({ filename: 'exceptions.log' }));
+        winston.exceptions.handle(new winston.transports.File({filename: 'exceptions.log'}));
         RED.nodes.createNode(this, config);
-        var node = this;
-        var filesize = 1048576;
-        var maxfiles = 1;
-        var archive = false;
-        var logType = config.logtype;
-        var complete = config.complete;
-        var debugLog = config.debug;
+        var logger = null;
+        var prefix = config.prefix;
+        var fileLog = true;
         var consoleLog = config.console;
-        var fileLog = config.file;
-        var logger = null;        
+        var debugLog = config.debug;
+        var complete = config.complete;
+        var datePattern = config.datePattern || 'YYYY-MM-DD.';
+        var logType = config.logtype;
+        var transports = [];
 
-        if (config.maxsize >= 1) {
-            filesize = config.maxsize * 1048576;
-        }
-        if (config.maxFiles >= 1) {
-            maxfiles = config.maxFiles;
-        }
-        if (config.zip === true || config.zip === true) {
-            archive = true;
-        }
-        if (config.zip === false || config.zip === false || config.zip === undefined || config.zip === null) {
-            archive = false;
+        transports.push(new (winston.transports.DailyRotateFile)({
+                filename: prefix,
+                datePattern: datePattern,
+                prepend: true,
+                json: false
+            })
+        );
+
+        if (consoleLog) {
+            transports.push(new (winston.transports.Console)({
+                colorize: true,
+                prettyPrint: true
+            }));
         }
 
-        if (fileLog === true && consoleLog === true) {            
-            logger = new winston.Logger({
-                exitOnError: false,
-                level: logType,
-                transports: [
-                    new (winston.transports.Console)({
-                        colorize: true,
-                        prettyPrint: true
-                    }),
-                    new (winston.transports.File)(
-                        {
-                            filename: config.filename,
-                            maxsize: filesize,
-                            maxFiles: maxfiles,
-                            level: logType,
-                            colorize: true,
-                            handleExceptions: true,
-                            humanReadableUnhandledException: true,
-                            json: true,
-                            zippedArchive: archive,
-                            prettyPrint: true
-                        })
-                ]
-            });
-        }
-        else if (fileLog === false && consoleLog === true) {            
-            logger = new winston.Logger({
-                exitOnError: false,
-                level: logType,
-                transports: [
-                    new (winston.transports.Console)({
-                        colorize: true,
-                        prettyPrint: true
-                    })
-                ]
-            });
-        }
-        else if (fileLog === true && consoleLog === false) {            
-            logger = new winston.Logger({
-                exitOnError: false,
-                level: logType,
-                transports: [
-                    new (winston.transports.File)(
-                        {
-                            filename: config.filename,
-                            maxsize: filesize,
-                            maxFiles: maxfiles,
-                            level: logType,
-                            colorize: true,
-                            handleExceptions: true,
-                            humanReadableUnhandledException: true,
-                            json: true,
-                            zippedArchive: archive,
-                            prettyPrint: true
-                        })
-                ]
-            });
-        }
+        logger = new winston.createLogger({
+            exitOnError: false,
+            level: logType,
+            transports: transports
+        });
+
 
         this.on('input', function (msg) {
             if (logType === "info") {
@@ -105,12 +56,12 @@ module.exports = function (RED) {
                         sendDebug({ id: this.id, name: this.name, topic: msg.topic, msg: msg[complete], _path: msg._path });
                     }
                     if (fileLog !== false || consoleLog !== false) {
-                        logger.log('info', JSON.stringify(msg));
+                        logger.log('info', JSON.stringify(msg[complete]));
                     }
                 }
             }
 
-            if (msg.hasOwnProperty('error')) {                
+            if (msg.hasOwnProperty('error')) {
                 if (debugLog === true || debugLog === "true") {
                     sendDebug({ id: this.id, name: this.name, topic: msg.topic, msg: msg.error, _path: msg._path });
                 }
@@ -119,7 +70,7 @@ module.exports = function (RED) {
                 }
             }
 
-            if (msg.hasOwnProperty('warn')) {                
+            if (msg.hasOwnProperty('warn')) {
                 if (debugLog === true || debugLog === "true") {
                     sendDebug({ id: this.id, name: this.name, topic: msg.topic, msg: msg.warn, _path: msg._path });
                 }
