@@ -32,3 +32,4 @@
   "dependencies": {
     "winston-daily-rotate-file": "^4.6.1"
   }
+}
