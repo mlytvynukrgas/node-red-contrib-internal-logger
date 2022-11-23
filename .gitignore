@@ -4,3 +4,4 @@ coverage
 node_modules
 /sonar-project.properties
 dist
+.package-lock.json
