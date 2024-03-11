@@ -1,8 +1,8 @@
 {
   "name": "@mlytvyn/node-red-contrib-internal-logger",
-  "version": "0.1.1",
-  "description": "Advanced logger for Node-Red, forked from jayathuam/node-red-contrib-advance-logger",
-  "main": "advanced-logger.js",
+  "version": "0.1.2",
+  "description": "Advanced logger for Node-Red",
+  "main": "internal-logger.js",
   "scripts": {
     "release": "standard-version"
   },
