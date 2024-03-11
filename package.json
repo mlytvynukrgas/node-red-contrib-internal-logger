@@ -1,6 +1,6 @@
 {
-  "name": "node-red-contrib-advanced-logger",
-  "version": "1.0.15",
+  "name": "@mlytvyn/node-red-contrib-internal-logger",
+  "version": "0.1.1",
   "description": "Advanced logger for Node-Red, forked from jayathuam/node-red-contrib-advance-logger",
   "main": "advanced-logger.js",
   "scripts": {
@@ -8,21 +8,19 @@
   },
   "keywords": [
     "file logger",
+    "console logger",
     "node-red"
   ],
   "node-red": {
     "version": ">=2.0.0",
     "nodes": {
-      "node-red-contrib-logger": "advanced-logger.js"
+      "node-red-contrib-logger": "internal-logger.js"
     }
   },
-  "author": {
-    "name": "Marc Neubauer",
-    "email": "marc.neubauer@gmail.com"
-  },
+  "author": "Max Lytvyn <mlytvyn@ukrgasbank.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marcneubauer/node-red-contrib-advanced-logger.git"
+    "url": "git+https://github.com/mlytvynukrgas/node-red-contrib-internal-logger.git"
   },
   "license": "MIT",
   "devDependencies": {
@@ -31,5 +29,9 @@
   },
   "dependencies": {
     "winston-daily-rotate-file": "^4.6.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/mlytvynukrgas/node-red-contrib-internal-logger/issues"
+  },
+  "homepage": "https://github.com/mlytvynukrgas/node-red-contrib-internal-logger#readme"
 }

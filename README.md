@@ -37,6 +37,6 @@ The input payload JSON should have following properties for warning and error lo
 
 ## License
 
-MIT © `Marc Neubauer`
+MIT © `Max Lytvyn`
 
 [npm-url]: https://www.npmjs.com/package/node-red-contrib-advanced-logger

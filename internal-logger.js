@@ -5,13 +5,13 @@ module.exports = function (RED) {
     var util = require("util");
     require('winston-daily-rotate-file');
 
-    function AdvanceLoggerNode(config) {
+    function InternalLoggerNode(config) {
         var winston = require('winston');
         winston.exceptions.handle(new winston.transports.File({filename: 'exceptions.log'}));
         RED.nodes.createNode(this, config);
         var logger = null;
         var prefix = config.prefix;
-        var fileLog = true;
+        var fileLog = config.file;
         var consoleLog = config.console;
         var debugLog = config.debug;
         var complete = config.complete;
@@ -19,13 +19,15 @@ module.exports = function (RED) {
         var logType = config.logtype;
         var transports = [];
 
-        transports.push(new (winston.transports.DailyRotateFile)({
-                filename: prefix,
-                datePattern: datePattern,
-                prepend: true,
-                json: false
-            })
-        );
+        if (fileLog) {
+            transports.push(new (winston.transports.DailyRotateFile)({
+                    filename: prefix,
+                    datePattern: datePattern,
+                    prepend: true,
+                    json: false
+                })
+            );
+        }
 
         if (consoleLog) {
             transports.push(new (winston.transports.Console)({
@@ -34,12 +36,13 @@ module.exports = function (RED) {
             }));
         }
 
-        logger = new winston.createLogger({
-            exitOnError: false,
-            level: logType,
-            transports: transports
-        });
-
+        if (consoleLog || fileLog) {
+            logger = new winston.createLogger({
+                exitOnError: false,
+                level: logType,
+                transports: transports
+            });
+        }
 
         this.on('input', function (msg) {
             if (logType === "info") {
@@ -135,5 +138,5 @@ module.exports = function (RED) {
         RED.comms.publish("debug", msg);
     }
 
-    RED.nodes.registerType("advanced logger", AdvanceLoggerNode);
+    RED.nodes.registerType("internal logger", InternalLoggerNode);
 };

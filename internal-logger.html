@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('advanced logger', {
+    RED.nodes.registerType('internal logger', {
         category: 'output',
         color: '#B2EBF2',
         defaults: {
@@ -15,7 +15,7 @@
                 required: true
             },
             console: {
-                value: false
+                value: true
             },
             file: {
                 value: false
@@ -31,7 +31,7 @@
                 required: true
             },
             prefix: {
-                value: "./AdvancedLogger/%DATE%.log",
+                value: "./InternalLogger/%DATE%.log",
                 required: true
             },
             datePattern: {
@@ -44,7 +44,7 @@
         icon: "log.png",
         align: "right",
         label: function(){
-            return this.name || "advanced logger";
+            return this.name || "internal logger";
         },
         oneditprepare: function(){
             $("#node-input-typed-complete").typedInput({
@@ -70,6 +70,16 @@
                 }
             });
 
+            $("#node-input-file").on("change", function() {
+                if ($("#node-input-file").is(':checked')) {
+                    $("#node-input-file").attr("file", "file");
+                    $("#filefields").show();
+                } else {
+                    $("#node-input-file").removeAttr("file");
+                    $("#filefields").hide();
+                }
+            });
+
             $("#node-input-logtype").on("change", function(){
                 if ($("#node-input-logtype").val() === 'info') {
                     $("#completerow").show();
@@ -90,43 +100,49 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="advanced logger">
+<script type="text/x-red" data-template-name="internal logger">
     <div class="form-row">
-    <label for="node-input-name" style="width: 28%;"><i class="icon-tag"></i> Name</label>
-    <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-row">
-    <label for="node-input-prefix" style="width:28%;">Prefix</label>
-    <input type="text" id="node-input-prefix" placeholder="Log-">
-    </div>
-    <div class="form-row">
-    <label for="node-input-datePattern" style="width: 28%;">Date Pattern</label>
-    <input type="text" id="node-input-datePattern" placeholder="YYYY-MM-DD">
+        <label for="node-input-name" style="width: 28%;"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row" style="border: 1px solid black; padding: 5px;">
-    <label style="width: 28%;"><i class="fa fa-rocket"></i> Log transports</label>
+        <label style="width: 28%;"><i class="fa fa-rocket"></i> Log transports</label>
 
-    <input type="checkbox" id="node-input-console" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
-    <label for="node-input-console" style="width: 18%;"> Console</label>
+        <input type="checkbox" id="node-input-console" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-console" style="width: 18%;"> Console</label>
 
-    <input type="checkbox" id="node-input-debug" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
-    <label for="node-input-debug" style="width: 18%;"> Debug</label>
+        <input type="checkbox" id="node-input-debug" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-debug" style="width: 18%;"> Debug</label>
+
+        <input type="checkbox" id="node-input-file" placeholder="spawn" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-file" style="width: 18%;"> File</label>
     </div>
     <div class="form-row">
-    <label for="node-input-logtype" style="width: 28%;"><i class="fa fa-tasks"></i> Log type</label>
-    <select id="node-input-logtype">
-    <option value="info">Info logs</option>
-    <option value="warn">Warn logs</option>
-    <option value="error">Error logs</option>
-    </select>
+        <label for="node-input-logtype" style="width: 28%;"><i class="fa fa-tasks"></i> Log type</label>
+        <select id="node-input-logtype">
+        <option value="info">Info logs</option>
+        <option value="warn">Warn logs</option>
+        <option value="error">Error logs</option>
+        </select>
     </div>
     <div class="form-row" id="completerow">
-    <label for="node-input-typed-complete" style="width: 28%;"><i class="fa fa-clone"></i> Info log output</label>
-    <input id="node-input-typed-complete" type="text">
-    <input id="node-input-complete" type="hidden">
+        <label for="node-input-typed-complete" style="width: 28%;"><i class="fa fa-clone"></i> Info log output</label>
+        <input id="node-input-typed-complete" type="text">
+        <input id="node-input-complete" type="hidden">
+    </div>
+
+    <div id="filefields" style="border: 1px solid black; padding: 5px;">
+        <div class="form-row">
+            <label for="node-input-prefix" style="width:28%;">Prefix</label>
+            <input type="text" id="node-input-prefix" placeholder="Log-">
+        </div>
+        <div class="form-row">
+            <label for="node-input-datePattern" style="width: 28%;">Date Pattern</label>
+            <input type="text" id="node-input-datePattern" placeholder="YYYY-MM-DD">
+        </div>
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="advanced logger">
+<script type="text/x-red" data-help-name="internal logger">
     <p> A node to facilitate sending log data where you want it.</p>
 </script>
